@@ -10,7 +10,8 @@ exports[`render layout 1`] = `
       >
         Home
       </a>
-       |
+       
+      |
        
       <a
         href="/about"
@@ -20,8 +21,10 @@ exports[`render layout 1`] = `
       </a>
     </nav>
   </header>
-  <footer>
-    I'm here to stay
+  <footer
+    data-testid="footer"
+  >
+    copyright
   </footer>
 </div>
 `;
