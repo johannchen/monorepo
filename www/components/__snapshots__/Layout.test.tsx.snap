@@ -1,0 +1,27 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`render layout 1`] = `
+<div>
+  <header>
+    <nav>
+      <a
+        href="/"
+        onClick={[Function]}
+      >
+        Home
+      </a>
+       |
+       
+      <a
+        href="/about"
+        onClick={[Function]}
+      >
+        About
+      </a>
+    </nav>
+  </header>
+  <footer>
+    I'm here to stay
+  </footer>
+</div>
+`;
