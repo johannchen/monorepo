@@ -1,32 +1,52 @@
-const express = require('express');
-const { ApolloServer, gql } = require('apollo-server-express');
+const { ApolloServer, gql } = require('apollo-server');
 
-// Construct a schema, using GraphQL schema language
+// This is a (sample) collection of books we'll be able to query
+// the GraphQL server for.  A more complete example might fetch
+// from an existing data source like a REST API or database.
+const books = [
+  {
+    title: 'Harry Potter and the Chamber of Secrets',
+    author: 'J.K. Rowling'
+  },
+  {
+    title: 'Jurassic Park',
+    author: 'Michael Crichton'
+  }
+];
+
+// Type definitions define the "shape" of your data and specify
+// which ways the data can be fetched from the GraphQL server.
 const typeDefs = gql`
+  # Comments in GraphQL are defined with the hash (#) symbol.
+
+  # This "Book" type can be used in other type declarations.
+  type Book {
+    title: String
+    author: String
+  }
+
+  # The "Query" type is the root of all GraphQL queries.
+  # (A "Mutation" type will be covered later on.)
   type Query {
-    hello: String
+    books: [Book]
   }
 `;
 
-// Provide resolver functions for your schema fields
+// Resolvers define the technique for fetching the types in the
+// schema.  We'll retrieve books from the "books" array above.
 const resolvers = {
   Query: {
-    hello: () => 'Hello world from ApolloServer on Now 2.0!'
+    books: () => books
   }
 };
 
-const server = new ApolloServer({ typeDefs, resolvers, introspection: true });
+// In the most basic sense, the ApolloServer can be started
+// by passing type definitions (typeDefs) and the resolvers
+// responsible for fetching the data for those types.
+const server = new ApolloServer({ typeDefs, resolvers });
 
-const app = express();
-server.applyMiddleware({ app });
-app.get('/', (req, res) => {
-  res.redirect('/graphql');
+// This `listen` method launches a web-server.  Existing apps
+// can utilize middleware options, which we'll discuss later.
+server.listen().then(({ url }) => {
+  console.log(`🚀  Server ready at ${url}`);
 });
-
-const port = 4000;
-
-app.listen({ port }, () =>
-  console.log(
-    `🚀 Server ready at http://localhost:${port}${server.graphqlPath}`
-  )
-);
