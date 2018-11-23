@@ -18,14 +18,13 @@ if (!isBrowser) {
 
 function create(initialState?: any) {
   // Check out https://github.com/zeit/next.js/pull/4611 if you want to use the AWSAppSyncClient
+  const localhost = 'http://localhost:4000';
+  const prodhost = 'https://tenstep.net';
   return new ApolloClient({
     connectToDevTools: isBrowser,
     ssrMode: !isBrowser, // Disables forceFetch on the server (so queries are only run once)
     link: new HttpLink({
-      uri:
-        process.env.NODE_ENV === 'production'
-          ? 'https://server.codeponder.com/graphql'
-          : 'http://localhost:4000/graphql',
+      uri: process.env.NODE_ENV === 'production' ? prodhost : localhost,
       credentials: 'include'
     }),
 
