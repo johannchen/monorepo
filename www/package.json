@@ -1,5 +1,5 @@
 {
-  "name": "tenstep-web",
+  "name": "webapp",
   "version": "1.0.0",
   "scripts": {
     "dev": "next",
